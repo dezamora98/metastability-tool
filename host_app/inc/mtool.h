@@ -1,5 +1,5 @@
-#ifndef MET_TOOL_H
-#define MET_TOOL_H
+#ifndef M_TOOL_H
+#define M_TOOL_H
 
 #include <stdint.h>
 
@@ -23,8 +23,20 @@ typedef struct
 {
     uint64_t exp_clock;
     uint64_t sample_rate;
-
 }mtool_exp_param;
+
+/**
+ * @struct mtool_frame
+ * @brief Structure for defining the frame in mtool protocol
+ */
+typedef struct 
+{
+    uint8_t start;      /// frame start byte
+    uint8_t command;    /// byte for command in protocol
+    uint8_t size;       /// define the size of the data section in the protocol
+    uint8_t data[256];  /// data section
+    uint8_t checksum;   /// checksum section
+}mtool_frame;
 
 
 void mtool_set_param();
@@ -32,4 +44,4 @@ void mtool_start();
 void mtool_stop();
 void mtool_get_data(mtool_exp_data *data);
 
-#endif // !MET_TOOL_H
+#endif // !M_TOOL_H
