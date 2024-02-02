@@ -47,26 +47,52 @@ typedef struct
  * @struct mtool_frame
  * @brief Structure for defining the frame in mtool protocol
  */
-typedef struct
+struct
 {
-    uint8_t start;     /// frame start byte
-    uint8_t command;   /// byte for command in protocol
-    uint16_t size;     /// define the size of the data section in the protocol
-    uint8_t data[256]; /// data section
-    uint8_t checksum;  /// checksum section
+    uint8_t start;   /// frame start byte
+    uint8_t command; /// byte for command in protocol
+    uint8_t size;    /// define the size of the data section in the protocol
+    union data       /// data section vector
+    {
+        uint8_t *byte;
+        mtool_exp_data *exp;
+        mtool_exp_param *param;
+    };
+    uint8_t checksum; /// checksum section
 } mtool_frame;
 
 /**
- * @brief mtool_set_experiment()
- * @param[in] list_exp experiment list
- * @param[in] n_exp  number of experiments
- * @return
+ * @brief set experiment parameters
+ * @param list_exp experiment list
+ * @param n_exp  number of experiments
+ * @return mtool_error 
  */
-mtool_error mtool_set_experiment(mtool_exp_param *list_exp_param, uint16_t n_exp_param);
+mtool_error mtool_set_experiment(mtool_exp_param *list_exp_param, uint8_t n_exp_param);
 
+/**
+ * @brief obtain results of experiments
+ * @param list_exp 
+ * @param n_exp_data 
+ * @return mtool_error 
+ */
+mtool_error mtool_get_data(mtool_exp_data *list_exp_data, uint8_t n_exp_data);
+
+/**
+ * @brief start experiments
+ * @return mtool_error 
+ */
 mtool_error mtool_start();
+
+/**
+ * @brief force experiments to stop
+ * @return mtool_error 
+ */
 mtool_error mtool_stop();
+
+/**
+ * @brief delete experiment data
+ * @return mtool_error 
+ */
 mtool_error mtool_clear();
-mtool_error mtool_get_data(mtool_exp_data *list_exp, uint16_t n_exp_data);
 
 #endif // !M_TOOL_H
