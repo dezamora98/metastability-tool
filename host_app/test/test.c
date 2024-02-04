@@ -24,8 +24,8 @@ int test_create_buffer()
     uint8_t *buffer;
     int out;
 
-    create_frame(&buffer, 10, set_experiment, list, sizeof(mt_exp), 3);
-    memcpy(list_0,buffer[3],sizeof(mt_exp)*3);
+    create_frame(buffer, 10, set_experiment, list, sizeof(mt_exp), 3);
+    memcpy(list_0,&buffer[3],sizeof(mt_exp)*3);
 
     //Line ID
     if(memcmp(list_0,list,sizeof(mt_exp)*3)){
@@ -34,7 +34,7 @@ int test_create_buffer()
     }
     
     printf("PASS >> Create buffer.\n\r");
-    delete_frame(&buffer);
+    delete_frame(buffer);
     return 0;
 }
 
