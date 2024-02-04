@@ -71,13 +71,7 @@ typedef struct
     uint8_t start;   /// frame start byte
     uint8_t size;    /// define the size of the data section in the protocol
     uint8_t command; /// byte for command in protocol
-    union
-    {
-        uint8_t *byte;
-        mt_exp *exp;
-        mt_exp_param *exp_param;
-        mt_exp_data *exp_data;
-    } data;           /// data section vector
+    void* data;      /// data section vector
     uint8_t checksum; /// checksum section
 } mt_frame;
 
