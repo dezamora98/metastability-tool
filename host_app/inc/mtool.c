@@ -19,7 +19,6 @@ mt_error mt_set_exp(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
         .checksum = 0,
     };
 
-
     frame.checksum += frame.command;
     frame.checksum += frame.size;
     for (i = 0; i != frame.size; ++i)
