@@ -71,7 +71,6 @@ typedef struct
     uint8_t start;   /// frame start byte
     uint8_t size;    /// define the size of the data section in the protocol
     uint8_t command; /// byte for command in protocol
-    uint32_t addr;   /// addr = (id)
     union
     {
         uint8_t *byte;
