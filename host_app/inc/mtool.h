@@ -72,6 +72,7 @@ typedef struct
     uint8_t size;    /// define the size of the data section in the protocol
     uint8_t command; /// byte for command in protocol
     void* data;      /// data section vector
+    uint8_t data_size;
     uint8_t checksum; /// checksum section
 } mt_frame;
 
@@ -101,6 +102,10 @@ mt_error mt_init(mt* mtool, _mt_interface *interface, _mt_interface_init *interf
                  _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
                  _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffer,
                  uint16_t size_buffer);
+
+
+void create_frame(uint8_t *buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data);
+void delete_frame(uint8_t *buffer);
 
 /**
  * @brief set experiment parameters

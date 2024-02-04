@@ -1,4 +1,6 @@
 #include "mtool.h"
+#include <memory.h>
+#include <malloc.h>
 
 mt_error mt_init(mt *mtool, _mt_interface *interface, _mt_interface_init *interface_init,
                  _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
@@ -8,29 +10,34 @@ mt_error mt_init(mt *mtool, _mt_interface *interface, _mt_interface_init *interf
     return NO_ERROR;
 }
 
+void create_frame(uint8_t *buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data)
+{
+    uint16_t i = 0;                               /// iterator
+    size_t size_frame = (n_data * data_size) + 4; /// calculando tamaño de trama
+
+    buffer = (uint8_t *)malloc(size_frame);         /// asignando memoria a trama
+    buffer[i++] = start_byte;                     /// asignando byte de start
+    buffer[i++] = size_frame - 1;                 /// asignando tamaño de trama menos el byte de start
+    buffer[i++] = command;                        /// asignando campo command
+    memcpy(&(buffer[i]), data, data_size * n_data); /// copiando campo de datos
+
+    for (i = 1; i < size_frame; ++i)
+    {
+        buffer[size_frame - 1] += buffer[i];
+    }
+    buffer[size_frame - 1] = (~buffer[size_frame - 1]) + 1;
+}
+
+void delete_frame(uint8_t *buffer)
+{
+    free(buffer);
+    buffer = NULL;
+}
+
 mt_error mt_set_exp(mt *mtool, mt_exp *list_exp, uint8_t n_exp)
 {
     uint8_t i = 0;
-    mt_frame frame;
-
-    for (i = 0; i < n_exp; ++i)
-    {
-        frame.start = 0x10;
-        frame.command = set_experiment;
-        frame.size = sizeof(mt_exp_param) + 2;
-        frame.data.exp = list_exp[i];
-        
-        frame.checksum = 0;
-        
-    }
-
-    frame.checksum += frame.command;
-    frame.checksum += frame.size;
-    for (i = 0; i != frame.size; ++i)
-    {
-        frame.checksum += frame.data.exp;
-    }
-
+    create_frame(mtool->tx_buffer, 0x10, set_experiment, list_exp, sizeof(mt_exp), n_exp);
     return NO_ERROR;
 }
 
