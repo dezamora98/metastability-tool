@@ -41,6 +41,6 @@ int test_create_buffer()
 int main()
 {
    int test;
-   test = test_create_buffer;
+   test = test_create_buffer();
    return test;
 }
