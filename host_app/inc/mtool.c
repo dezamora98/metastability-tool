@@ -44,7 +44,7 @@ mt_error mt_stop(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
     return NO_ERROR;
 }
 
-mt_error mt_clear()
+mt_error mt_clear(mt* mtool)
 {
     return NO_ERROR;
 }
