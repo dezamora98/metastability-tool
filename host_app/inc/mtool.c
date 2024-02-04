@@ -1,12 +1,17 @@
 #include "mtool.h"
 
-mtool_error mtool_set_experiment(mtool_exp_param *list_exp_param, uint8_t n_exp_param)
+mt_error mt_init()
+{
+    
+}
+
+mt_error mt_set_experiment(mt_exp_param *list_exp_param, uint8_t n_exp_param)
 {
     uint8_t i;
-    mtool_frame frame = {
+    mt_frame frame = {
         .start = ">",
         .command = set_experiment,
-        .size = n_exp_param * sizeof(mtool_exp_param),
+        .size = n_exp_param * sizeof(mt_exp_param),
         .data.exp_param = list_exp_param,
         .checksum = 0,
     };
@@ -22,23 +27,22 @@ mtool_error mtool_set_experiment(mtool_exp_param *list_exp_param, uint8_t n_exp_
     return NO_ERROR;
 }
 
-mtool_error mtool_get_data(mtool_exp_data *list_exp_data, uint8_t n_exp_data)
-{
-
-    return 0;
-}
-
-mtool_error mtool_start()
+mt_error mt_get_data(mt_exp_data *list_exp_data, uint8_t n_exp_data)
 {
     return NO_ERROR;
 }
 
-mtool_error mtool_stop()
+mt_error mt_start()
 {
     return NO_ERROR;
 }
 
-mtool_error mtool_clear()
+mt_error mt_stop()
+{
+    return NO_ERROR;
+}
+
+mt_error mt_clear()
 {
     return NO_ERROR;
 }
