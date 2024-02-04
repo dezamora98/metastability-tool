@@ -15,11 +15,18 @@ typedef enum
 
 typedef enum
 {
-    NO_ERROR = end_enum_command,
+    NO_ERROR,
     ERROR_FRAME,
     ERROR_NOT_CONFIG,
     ERROR_EXP_STARTED,
 } mtool_error;
+
+typedef enum
+{
+    mt_exp_NOT_CONFIG,
+    mt_exp_STOP,
+    mt_exp_STARTED,
+} mtool_exp_state;
 
 /**
  * @struct mtool_exp_data
@@ -44,55 +51,84 @@ typedef struct
 } mtool_exp_param;
 
 /**
+ * @struct mtool_exp
+ * @brief srgtucture for defining experiment
+ */
+typedef struct
+{
+    uint32_t id;           /// experiment id or address
+    mtool_exp_state state; /// experiment state
+    mtool_exp_param param; /// experiment setup parameters
+    mtool_exp_data data;   /// experiment data
+} mtool_exp;
+
+/**
  * @struct mtool_frame
  * @brief Structure for defining the frame in mtool protocol
  */
-struct
+typedef struct
 {
     uint8_t start;   /// frame start byte
-    uint8_t command; /// byte for command in protocol
     uint8_t size;    /// define the size of the data section in the protocol
-    union data       /// data section vector
+    uint8_t command; /// byte for command in protocol
+    uint32_t addr;   ///
+    union
     {
         uint8_t *byte;
-        mtool_exp_data *exp;
-        mtool_exp_param *param;
-    };
+        mtool_exp *exp;
+        mtool_exp_param *exp_param;
+        mtool_exp_data *exp_data;
+    } data;           /// data section vector
     uint8_t checksum; /// checksum section
 } mtool_frame;
+
+typedef void* _mt_interface;
+typedef mtool_error (_mt_interface_init)(_mt_interface*);
+typedef mtool_error (_mt_interface_stop)(_mt_interface*);
+typedef mtool_error (_mt_interface_tx)(_mt_interface,void*,size_t,uint32_t);
+typedef mtool_error (_mt_interface_rx)(_mt_interface,void*,size_t,uint32_t);
+
+typedef struct
+{
+    _mt_interface *interface;
+    uint8_t tx_buffer[256];
+    uint8_t tx_buffer[256];
+} mtool;
+
+mtool_error mt_init();
 
 /**
  * @brief set experiment parameters
  * @param list_exp experiment list
  * @param n_exp  number of experiments
- * @return mtool_error 
+ * @return mtool_error
  */
-mtool_error mtool_set_experiment(mtool_exp_param *list_exp_param, uint8_t n_exp_param);
+mtool_error mt_set_experiment(mtool_exp *list_exp_param, uint8_t n_exp_param);
 
 /**
  * @brief obtain results of experiments
- * @param list_exp 
- * @param n_exp_data 
- * @return mtool_error 
+ * @param list_exp
+ * @param n_exp_data
+ * @return mtool_error
  */
-mtool_error mtool_get_data(mtool_exp_data *list_exp_data, uint8_t n_exp_data);
+mtool_error mt_get_data(mtool_exp *list_exp_data, uint8_t n_exp);
 
 /**
  * @brief start experiments
- * @return mtool_error 
+ * @return mtool_error
  */
-mtool_error mtool_start();
+mtool_error mt_start();
 
 /**
  * @brief force experiments to stop
- * @return mtool_error 
+ * @return mtool_error
  */
-mtool_error mtool_stop();
+mtool_error mt_stop();
 
 /**
  * @brief delete experiment data
- * @return mtool_error 
+ * @return mtool_error
  */
-mtool_error mtool_clear();
+mtool_error mt_clear();
 
 #endif // !M_TOOL_H
