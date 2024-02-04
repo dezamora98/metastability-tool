@@ -99,10 +99,15 @@ typedef struct
     _mt_interface_stop *interface_stop;
     _mt_interface_tx *interface_tx;
     _mt_interface_rx *interface_rx;
-    uint8_t tx_buffer[256];
-    uint8_t tx_buffer[256];
+    uint8_t *tx_buffer;
+    uint8_t *rx_buffer;
+    uint16_t size_bufer;
 } mt;
 
+mt_error mt_init(mt* mtool, _mt_interface *interface, _mt_interface_init *interface_init,
+                 _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
+                 _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffer,
+                 uint16_t size_buffer);
 
 /**
  * @brief set experiment parameters
@@ -110,32 +115,32 @@ typedef struct
  * @param n_exp  number of experiments
  * @return mt_error
  */
-mt_error mt_set_experiment(mt_exp *list_exp_param, uint8_t n_exp_param);
+mt_error mt_set_exp(mt* mtool,mt_exp *list_exp, uint8_t n_exp);
 
 /**
  * @brief obtain results of experiments
  * @param list_exp
- * @param n_exp_data
+ * @param n_data
  * @return mt_error
  */
-mt_error mt_get_data(mt_exp *list_exp_data, uint8_t n_exp);
+mt_error mt_get_exp(mt* mtool,mt_exp *list_exp, uint8_t n_exp);
 
 /**
  * @brief start experiments
  * @return mt_error
  */
-mt_error mt_start();
+mt_error mt_start(mt* mtool,mt_exp *list_exp, uint8_t n_exp);
 
 /**
  * @brief force experiments to stop
  * @return mt_error
  */
-mt_error mt_stop();
+mt_error mt_stop(mt* mtool,mt_exp *list_exp, uint8_t n_exp);
 
 /**
  * @brief delete experiment data
  * @return mt_error
  */
-mt_error mt_clear();
+mt_error mt_clear(mt* mtool);
 
 #endif // !M_TOOL_H

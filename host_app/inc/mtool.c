@@ -1,18 +1,21 @@
 #include "mtool.h"
 
-mt_error mt_init()
+mt_error mt_init(mt* mtool, _mt_interface *interface, _mt_interface_init *interface_init,
+                 _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
+                 _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffer,
+                 uint16_t size_buffer)
 {
-    
+    return NO_ERROR;
 }
 
-mt_error mt_set_experiment(mt_exp_param *list_exp_param, uint8_t n_exp_param)
+mt_error mt_set_exp(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
 {
     uint8_t i;
     mt_frame frame = {
-        .start = ">",
+        .start = 0x10,
         .command = set_experiment,
-        .size = n_exp_param * sizeof(mt_exp_param),
-        .data.exp_param = list_exp_param,
+        .size = n_exp * sizeof(mt_exp_param),
+        .data.exp = list_exp,
         .checksum = 0,
     };
 
@@ -23,21 +26,20 @@ mt_error mt_set_experiment(mt_exp_param *list_exp_param, uint8_t n_exp_param)
         frame.checksum += frame.data.byte[i];
     }
 
-    
     return NO_ERROR;
 }
 
-mt_error mt_get_data(mt_exp_data *list_exp_data, uint8_t n_exp_data)
+mt_error mt_get_exp(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
 {
     return NO_ERROR;
 }
 
-mt_error mt_start()
+mt_error mt_start(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
 {
     return NO_ERROR;
 }
 
-mt_error mt_stop()
+mt_error mt_stop(mt* mtool,mt_exp *list_exp, uint8_t n_exp)
 {
     return NO_ERROR;
 }
