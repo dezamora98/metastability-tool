@@ -39,6 +39,9 @@ int test_create_buffer()
     uint8_t n_list_1;
     create_obj(buffer, (void**)(&list_1), sizeof(mt_exp), &n_list_1);
 
+    mt_exp list_2[3];
+    memcpy(list_2,list_1,n_list_1*sizeof(mt_exp));
+
     if(memcmp(list,list_1,n_list_1*sizeof(mt_exp)))
     {
         printf("ERROR >> Create object.\n\r");

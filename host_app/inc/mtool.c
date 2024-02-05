@@ -31,8 +31,8 @@ void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_da
 {
     uint16_t i = 0;
     *n_data = (mt_buffer[1]-3)/data_size;
-    *data = malloc((*n_data)*data_size);
-    memcpy(*data,&mt_buffer[4],(*n_data)*data_size);
+    (*data) = (void *)malloc((*n_data)*data_size);
+    memcpy(*data,&(mt_buffer[4]),(*n_data)*data_size);
 }
 
 
