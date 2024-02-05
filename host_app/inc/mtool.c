@@ -27,11 +27,14 @@ void create_frame(uint8_t **buffer, uint8_t start_byte, mt_command command, void
     (*buffer)[size_frame - 1] = (~(*buffer)[size_frame - 1]) + 1;
 }
 
-void delete_frame(uint8_t **buffer)
+void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_data)
 {
-    free(*buffer);
-    (*buffer) = NULL;
+    uint16_t i = 0;
+    *n_data = (mt_buffer[1]-3)/data_size;
+    *data = malloc((*n_data)*data_size);
+    memcpy(*data,&mt_buffer[4],(*n_data)*data_size);
 }
+
 
 mt_error mt_set_exp(mt *mtool, mt_exp *list_exp, uint8_t n_exp)
 {
