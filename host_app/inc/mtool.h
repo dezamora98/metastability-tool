@@ -95,17 +95,15 @@ typedef struct
     _mt_interface_rx *interface_rx;
     uint8_t *tx_buffer;
     uint8_t *rx_buffer;
-    uint16_t size_bufer;
 } mt;
 
 mt_error mt_init(mt* mtool, _mt_interface *interface, _mt_interface_init *interface_init,
                  _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
-                 _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffer,
-                 uint16_t size_buffer);
+                 _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffe);
 
 
-void create_frame(uint8_t *buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data);
-void delete_frame(uint8_t *buffer);
+void create_frame(uint8_t **buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data);
+void delete_frame(uint8_t **buffer);
 
 /**
  * @brief set experiment parameters

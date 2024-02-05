@@ -1,4 +1,3 @@
-#define TEST
 #ifndef TEST
 
 #include <stdio.h>

@@ -1,32 +1,26 @@
-# Definir las carpetas
-SRC_DIR := src
-INC_DIR := inc
-TEST_DIR := test
-BUILD_DIR := build
+CC = gcc
+CFLAGS = -Iinc
+DEPS = $(wildcard inc/*.h)
+SRC_OBJ = $(patsubst src/%.c, build/%.o, $(wildcard src/*.c))
+INC_OBJ = $(patsubst inc/%.c, build/%.o, $(wildcard inc/*.c))
+TESTS = $(patsubst test/%.c, build/%.o, $(wildcard test/*.c))
 
-# Definir los archivos
-SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
-INC_FILES := $(wildcard $(INC_DIR)/*.c)
-TEST_FILES := $(wildcard $(TEST_DIR)/*.c)
+build/%.o: src/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-# Definir el compilador y las banderas
-CC := gcc
-CFLAGS := -I$(INC_DIR)
+build/%.o: inc/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-# Crear la carpeta build si no existe
-$(shell mkdir -p $(BUILD_DIR))
+build/%.o: test/%.c $(DEPS)
+	$(CC) -DTEST -c -o $@ $< $(CFLAGS)
 
-# Regla por defecto
-all: $(BUILD_DIR)/main $(BUILD_DIR)/test
+build/main: $(SRC_OBJ) $(INC_OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
 
-# Regla para compilar el programa principal
-$(BUILD_DIR)/main: $(SRC_FILES) $(INC_FILES)
-	$(CC) $(CFLAGS) -o $@ $^
+.PHONY: tests
+tests:  $(INC_OBJ) $(TESTS)
+	$(CC) -o build/tests $^ $(CFLAGS)
 
-# Regla para compilar los tests
-$(BUILD_DIR)/test: $(TEST_FILES) $(INC_FILES)
-	$(CC) $(CFLAGS) -o $@ $^
-
-# Regla para limpiar los archivos compilados
+.PHONY: clean
 clean:
-	rm -f $(BUILD_DIR)/main $(BUILD_DIR)/test
+	rm -f build/*.o build/main build/tests

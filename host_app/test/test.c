@@ -19,28 +19,26 @@ int test_create_buffer()
         .state = mt_exp_NOT_CONFIG,
     };
 
-    mt_exp list_0[3];
     mt_exp list[3] = {exp,exp,exp};
     uint8_t *buffer;
     int out;
 
-    create_frame(buffer, 10, set_experiment, list, sizeof(mt_exp), 3);
-    memcpy(list_0,&buffer[3],sizeof(mt_exp)*3);
-
-    //Line ID
-    if(memcmp(list_0,list,sizeof(mt_exp)*3)){
+    create_frame(&buffer, 10, set_experiment, list, sizeof(mt_exp), 3);
+    
+    if(memcmp(list,&buffer[3],sizeof(mt_exp)*3)){
         printf("ERROR >> Create buffer.\n\r");
         return 1;
     }
     
     printf("PASS >> Create buffer.\n\r");
-    delete_frame(buffer);
+    delete_frame(&buffer);
     return 0;
 }
 
 int main()
 {
    int test;
+   printf("init test\n\r");
    test = test_create_buffer();
    return test;
 }
