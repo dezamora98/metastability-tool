@@ -9,37 +9,56 @@ mt_error mt_init(mt *mtool, _mt_interface *interface, _mt_interface_init *interf
     return NO_ERROR;
 }
 
-void create_frame(uint8_t **buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data)
-{
-    uint16_t i = 0;                               /// iterator
-    size_t size_frame = (n_data * data_size) + 4; /// calculando tamaño de trama
-
-    (*buffer) = (uint8_t *)malloc(size_frame);         /// asignando memoria a trama
-    (*buffer)[i++] = start_byte;                     /// asignando byte de start
-    (*buffer)[i++] = size_frame - 1;                 /// asignando tamaño de trama menos el byte de start
-    (*buffer)[i++] = command;                        /// asignando campo command
-    memcpy(&((*buffer)[i]), data, data_size * n_data); /// copiando campo de datos
-
-    for (i = 1; i < size_frame; ++i)
-    {
-        (*buffer)[size_frame - 1] += (*buffer)[i];
-    }
-    (*buffer)[size_frame - 1] = (~(*buffer)[size_frame - 1]) + 1;
-}
-
-void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_data)
+void create_buffer(uint8_t **buffer, mt_frame *frame)
 {
     uint16_t i = 0;
-    *n_data = (mt_buffer[1]-3)/data_size;
-    (*data) = (void *)malloc((*n_data)*data_size);
-    memcpy(*data,&(mt_buffer[4]),(*n_data)*data_size);
+    (*buffer) = malloc(frame->size + 6);
+    (*buffer)[i++] = frame->start;
+    (*buffer)[i++] = frame->addr & 0x000ff;
+    (*buffer)[i++] = frame->addr >> 8;
+    (*buffer)[i++] = frame->command;
+    (*buffer)[i++] = frame->size;
+    for (i; i != frame->size+5; ++i)
+    {
+        (*buffer)[i] = ((uint8_t*)(frame->data))[i - 5];
+    }
+    (*buffer)[i] = frame->checksum;
 }
 
+void create_frame(mt_frame *frame, uint8_t start_byte, uint16_t addr, mt_command command, uint8_t size, void *data)
+{
+    void *i;
+    frame->start = start_byte;
+    frame->addr = addr;
+    frame->command = command;
+    frame->size = size;
+    frame->data = data;
+
+    frame->checksum = 0;
+
+    for (i = &(frame->start); i != &(frame->data); ++i)
+    {
+        frame->checksum += *(uint8_t *)(i);
+    }
+    for (i = (frame->data); i != (frame->data + frame->size); ++i)
+    {
+        frame->checksum += *(uint8_t *)(i);
+    }
+    frame->checksum = -frame->checksum;
+}
+
+/*hay que cambiar a partir de aquí*/
+void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_data)
+{
+    *n_data = (mt_buffer[1] - 3) / data_size;
+    (*data) = (void *)malloc((*n_data) * data_size);
+    memcpy(*data, &mt_buffer[3], (*n_data) * data_size);
+}
 
 mt_error mt_set_exp(mt *mtool, mt_exp *list_exp, uint8_t n_exp)
 {
     uint8_t i = 0;
-    create_frame(&(mtool->tx_buffer), 0x10, set_experiment, list_exp, sizeof(mt_exp), n_exp);
+    // create_frame(&(mtool->tx_buffer), 0x10, set_experiment, 0x0000, list_exp, sizeof(mt_exp), n_exp);
     return NO_ERROR;
 }
 

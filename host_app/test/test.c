@@ -20,40 +20,73 @@ int test_create_buffer()
     };
 
     mt_exp list[3] = {exp, exp, exp};
+    mt_frame frame;
+
+    create_frame(&frame, 10, 0x0001, set_experiment, sizeof(list), list);
+
     uint8_t *buffer;
-    int out;
+    int i;
 
-    create_frame(&buffer, 10, set_experiment, list, sizeof(mt_exp), 3);
+    create_buffer(&buffer, &frame);
 
-    if (memcmp(list, &buffer[3], sizeof(mt_exp) * 3))
+    uint8_t sum = 0;
+    for (i = 0; i != (sizeof(list) + 5); ++i)
     {
-        printf("ERROR >> Create buffer.\n\r");
+        sum += buffer[i];
+    }
+    sum = -sum;
+
+    if(sum != buffer[frame.size+5] || sum != frame.checksum)
+    {
+        printf("ERROR>> Create buffer (checksum).");
+        delete_frame(buffer);
+        return 1;
+    }
+
+    if (memcmp(list, &buffer[5], sizeof(list)))
+    {
+        printf("ERROR >> Create buffer (data).\n\r");
+        delete_frame(buffer);
+        return 1;
+    }
+
+    if(memcmp(buffer, (uint8_t*)(&frame), 5))
+    {
+        printf("ERROR >> buffer != frame (start,addr,command,size).\n\r");
+        delete_frame(buffer);
+        return 1;
+    }
+
+    if (memcmp(&(buffer[5]), frame.data, frame.size))
+    {
+        printf("ERROR >> buffer != frame (data).\n\r");
         delete_frame(buffer);
         return 1;
     }
 
     printf("PASS >> Create buffer.\n\r");
-
-
+    /*---------------------------------------------------------------------------------------*/
+    /*hay que cambiar a partir de aquí*/
+    
     mt_exp *list_1;
     uint8_t n_list_1;
-    create_obj(buffer, (void**)(&list_1), sizeof(mt_exp), &n_list_1);
+    create_obj(buffer, (void **)(&list_1), sizeof(mt_exp), &n_list_1);
 
     mt_exp list_2[3];
-    memcpy(list_2,list_1,n_list_1*sizeof(mt_exp));
+    memcpy(list_2, list_1, n_list_1 * sizeof(mt_exp));
 
-    if(memcmp(list,list_1,n_list_1*sizeof(mt_exp)))
+    if (memcmp(list, list_1, n_list_1 * sizeof(mt_exp)))
     {
         printf("ERROR >> Create object.\n\r");
         delete_frame(buffer);
-        delete_obj(list_1); 
+        delete_obj(list_1);
         return 1;
     }
 
     printf("PASS >> Create object.\n\r");
 
     delete_frame(buffer);
-    delete_obj(list_1); 
+    delete_obj(list_1);
     return 0;
 }
 

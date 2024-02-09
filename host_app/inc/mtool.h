@@ -33,18 +33,18 @@ typedef enum
  * @struct mt_exp_data
  * @brief Structure to store the result of the experiment.
  */
-typedef struct
+typedef struct __attribute__((packed))
 {
     uint32_t n_met;   /// Number of metastability events.
-    float temp_chip;  /// Chip temperature
-    float power_chip; /// Chip power supply
+    float temp_chip;  /// Chip temperature  // ver lo del array
+    float power_chip; /// Chip power supply // ver lo del array
 } mt_exp_data;
 
 /**
  * @struct m_tool_param
  * @brief Structure for defining the experiment setup parameters.
  */
-typedef struct
+typedef struct __attribute__((packed))
 {
     uint32_t exp_clock;       /// frequency
     uint32_t exp_sample_rate; /// experiment sample rate
@@ -55,7 +55,7 @@ typedef struct
  * @struct mt_exp
  * @brief srgtucture for defining experiment
  */
-typedef struct
+typedef struct __attribute__((packed))
 {
     uint32_t id;        /// experiment id or address
     mt_exp_state state; /// experiment state
@@ -67,13 +67,13 @@ typedef struct
  * @struct mt_frame
  * @brief Structure for defining the frame in mt protocol
  */
-typedef struct
+typedef struct __attribute__((packed))
 {
     uint8_t start;   /// frame start byte
-    uint8_t size;    /// define the size of the data section in the protocol
+    uint16_t addr;   /// address
     uint8_t command; /// byte for command in protocol
+    uint8_t size;    /// define the size of the data section in the protocol
     void *data;      /// data section vector
-    uint8_t data_size;
     uint8_t checksum; /// checksum section
 } mt_frame;
 
@@ -87,7 +87,7 @@ typedef mt_error(_mt_interface_rx)(_mt_interface, void *, size_t, uint32_t);
  * @struct mt
  * @brief <añadir comentario>
  */
-typedef struct
+typedef struct __attribute__((packed))
 {
     _mt_interface *interface;
     _mt_interface_init *interface_init;
@@ -102,7 +102,11 @@ mt_error mt_init(mt *mtool, _mt_interface *interface, _mt_interface_init *interf
                  _mt_interface_stop *interface_stop, _mt_interface_rx *_mt_interface_rx,
                  _mt_interface_tx *interface_tx, uint8_t *tx_buffer, uint8_t *rx_buffe);
 
-void create_frame(uint8_t **buffer, uint8_t start_byte, mt_command command, void *data, size_t data_size, uint8_t n_data);
+
+
+void create_buffer(uint8_t **buffer, mt_frame *frame);
+
+void create_frame(mt_frame *frame, uint8_t start_byte, uint16_t addr, mt_command command, uint8_t size, void *data);
 
 void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_data);
 
