@@ -70,7 +70,15 @@ int test_create_buffer()
     
     mt_exp *list_1;
     uint8_t n_list_1;
-    create_obj(buffer, (void **)(&list_1), sizeof(mt_exp), &n_list_1);
+    mt_frame frame_1;
+    get_frame(&frame_1,buffer);
+
+    if(memcmp(&frame,&frame_1,5))
+    {
+        printf("ERROR >> Create frame of buffer.\n\r");
+        delete_frame(buffer);
+        return 1;
+    }
 
     mt_exp list_2[3];
     memcpy(list_2, list_1, n_list_1 * sizeof(mt_exp));
@@ -86,9 +94,9 @@ int test_create_buffer()
     printf("PASS >> Create object.\n\r");
 
     delete_frame(buffer);
-    delete_obj(list_1);
     return 0;
 }
+
 
 int main()
 {

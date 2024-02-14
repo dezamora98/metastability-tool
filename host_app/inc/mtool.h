@@ -108,6 +108,8 @@ void create_buffer(uint8_t **buffer, mt_frame *frame);
 
 void create_frame(mt_frame *frame, uint8_t start_byte, uint16_t addr, mt_command command, uint8_t size, void *data);
 
+void get_frame(mt_frame *frame, uint8_t *buffer);
+
 void create_obj(uint8_t *mt_buffer, void **data, size_t data_size, uint8_t *n_data);
 
 #define delete_frame(frame) \
