@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Sat Feb 24 14:24:42 2024
+# Process ID: 123704
+# Current directory: D:/metastability-tool/embedded_hard/Proyecto_TADSE_IP_Custom/Proyecto_TADSE/Proyecto_TADSE.runs/impl_5
+# Command line: vivado.exe -log Proyecto_TADSE_wrapper.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source Proyecto_TADSE_wrapper.tcl -notrace
+# Log file: D:/metastability-tool/embedded_hard/Proyecto_TADSE_IP_Custom/Proyecto_TADSE/Proyecto_TADSE.runs/impl_5/Proyecto_TADSE_wrapper.vdi
+# Journal file: D:/metastability-tool/embedded_hard/Proyecto_TADSE_IP_Custom/Proyecto_TADSE/Proyecto_TADSE.runs/impl_5\vivado.jou
+#-----------------------------------------------------------
+source Proyecto_TADSE_wrapper.tcl -notrace

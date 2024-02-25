@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER Circuito_para_pruebas
+	OPTION supported_peripherals = (Circuito_para_pruebas);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = Circuito_para_pruebas;
+END DRIVER
