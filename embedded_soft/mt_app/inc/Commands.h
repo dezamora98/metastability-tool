@@ -24,9 +24,22 @@ BaseType_t prvClearCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const ch
 static const CLI_Command_Definition_t xClearCommand =
 	{
 		"clear",
-		"\r\nclear:\r\n  Clear terminal.\r\n",
+		"\r\nclear or Ctrl+L:\r\n  Clear terminal.\r\n",
 		prvClearCommand,
 		0};
+
+
+BaseType_t pubExperimentCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);
+
+static const CLI_Command_Definition_t xClearCommand =
+	{
+		"experiment",
+		"\r\nexperiment:\r\n " \
+				"\t experiment <name> <duration> <clk_frec> <sample_rate> \r\n"\
+			"\r\n",
+		pubExperimentCommand,
+		4};
+
 
 
 #endif /* INC_COMMANDS_H_ */
