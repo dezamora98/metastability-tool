@@ -57,4 +57,15 @@ static const CLI_Command_Definition_t xStartCommand =
 		publsCommand,
 		1};
 
+BaseType_t pubCatCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);
+
+static const CLI_Command_Definition_t xCatCommand =
+	{
+		"cat",
+		"\r\ncat:\r\n "
+		"\tcat <experiment_name> \r\n"
+		"\r\n",
+		pubCatCommand,
+		1};
+
 #endif /* INC_COMMANDS_H_ */

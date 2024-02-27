@@ -32,7 +32,7 @@ BaseType_t pubExperimentCommand(char *pcWriteBuffer, size_t xWriteBufferLen, con
     BaseType_t t_leng;
 
     // experiment <name> <duration> <clk_frec> <sample_rate>
-    memset(t_exp.exp_name,0,10);
+    memset(t_exp.exp_name, 0, 10);
     memcpy(t_exp.exp_name, FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng), t_leng);
     t_exp.state = mt_exp_STOP;
     t_exp.param.exp_duration = atoi(strchr(FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng), ' '));
@@ -50,11 +50,11 @@ BaseType_t pubExperimentCommand(char *pcWriteBuffer, size_t xWriteBufferLen, con
         return pdFALSE;
     }
 
-    sprintf(pcWriteBuffer, "\tnew exp -> ( %s, %dt, %dMHz, %dp)\r\n",
+    sprintf(pcWriteBuffer, "\tnew exp -> ( %s, %lut, %luMHz, %lup)\r\n",
             t_exp.exp_name,
-            (unsigned int)t_exp.param.exp_duration,
-            (unsigned int)t_exp.param.exp_clock,
-            (unsigned int)t_exp.param.exp_sample_rate);
+            t_exp.param.exp_duration,
+            t_exp.param.exp_clock,
+            t_exp.param.exp_sample_rate);
 
     printf("(P) >> %s", pcWriteBuffer);
 
@@ -74,9 +74,9 @@ BaseType_t publsCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
         pxExp = mt_GetExpList();
     }
 
-    if(pxExp->item == NULL && pxExp->next_item == NULL)
+    if (pxExp->item == NULL && pxExp->next_item == NULL)
     {
-        strncpy(pcWriteBuffer,"\t<NULL>",xWriteBufferLen);
+        strncpy(pcWriteBuffer, "\t<NULL>", xWriteBufferLen);
         return pdFALSE;
     }
 
@@ -104,19 +104,61 @@ BaseType_t publsCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
 
 BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
 {
-    ExpList_Item_t* pxExpList_i = mt_GetExpList;
+    ExpList_Item_t *pxExpList_i = mt_GetExpList();
     BaseType_t t_leng;
-    const char * name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
+    const char *name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
 
     while (pxExpList_i != NULL)
     {
-        if(strncmp(pxExpList_i->item->exp_name, name, t_leng))
+        if (strncmp(pxExpList_i->item->exp_name, name, t_leng))
         {
             mt_StartExperiment(pxExpList_i);
-            break;
+            return pdTRUE;
         }
         pxExpList_i = pxExpList_i->next_item;
     }
-    
-    
+    return pdFALSE;
+}
+
+BaseType_t pubCatCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
+{
+    ExpList_Item_t *pxExpList_i = mt_GetExpList();
+    BaseType_t t_leng;
+    char name[10];
+    memset(name, 0, 10);
+    memcpy(name, FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng), t_leng);
+
+    while (pxExpList_i != NULL)
+    {
+        if (strncmp(pxExpList_i->item->exp_name, name, t_leng) == 0)
+        {
+            sprintf(pcWriteBuffer, "\t{\r\n"
+                                   "\t\t\"name\" : \"%s\",\r\n"
+                                   "\t\t\"state\" : \"%s\",\r\n"
+                                   "\t\t\"data\" : {\r\n"
+                                   "\t\t\t\"NMT\" : %lu,\r\n"
+                                   "\t\t\t\"temp\" : %f,\r\n"
+                                   "\t\t\t\"power\" : %f\r\n\t\t},\r\n"
+                                   "\t\t\"param\" : {\r\n"
+                                   "\t\t\t\"clk\" : %lu,\r\n"
+                                   "\t\t\t\"samble_rate\" : %lu,\r\n"
+                                   "\t\t\t\"duration\" : %lu\r\n\t\t}\r\n"
+                                   "\t}\r\n",
+                    pxExpList_i->item->exp_name,
+                    (pxExpList_i->item->state == mt_exp_STARTED) ? "START" : "STOP",
+                    pxExpList_i->item->data.n_met,
+                    pxExpList_i->item->data.temp_chip,
+                    pxExpList_i->item->data.power_chip,
+                    pxExpList_i->item->param.exp_clock,
+                    pxExpList_i->item->param.exp_sample_rate,
+                    pxExpList_i->item->param.exp_duration);
+
+            return pdFALSE;
+        }
+        pxExpList_i = pxExpList_i->next_item;
+    }
+
+    sprintf(pcWriteBuffer, "\texperiment <%s> does not exist\r\n", name);
+
+    return pdFALSE;
 }

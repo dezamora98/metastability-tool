@@ -35,6 +35,7 @@ int main(void)
 	FreeRTOS_CLIRegisterCommand(&xClearCommand);
 	FreeRTOS_CLIRegisterCommand(&xExperimentCommand);
 	FreeRTOS_CLIRegisterCommand(&xlsCommand);
+	FreeRTOS_CLIRegisterCommand(&xCatCommand);
 
 	vUARTCommandConsoleStart(&uCC, &uart, XPAR_PS7_UART_1_DEVICE_ID);
 
