@@ -32,7 +32,8 @@ BaseType_t pubExperimentCommand(char *pcWriteBuffer, size_t xWriteBufferLen, con
     BaseType_t t_leng;
 
     // experiment <name> <duration> <clk_frec> <sample_rate>
-    strcpy(t_exp.exp_name, strchr(FreeRTOS_CLIGetParameter(pcCommandString, 0, &t_leng), ' '));
+    memset(t_exp.exp_name,0,10);
+    memcpy(t_exp.exp_name, FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng), t_leng);
     t_exp.state = mt_exp_STOP;
     t_exp.param.exp_duration = atoi(strchr(FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng), ' '));
     t_exp.param.exp_clock = atoi(strchr(FreeRTOS_CLIGetParameter(pcCommandString, 2, &t_leng), ' '));
@@ -70,7 +71,7 @@ BaseType_t publsCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
     if (pxExp == NULL)
     {
         /* Reset the pxCommand pointer back to the start of the list. */
-        pxExp = &ExpList;
+        pxExp = mt_GetExpList();
     }
 
     if(pxExp->item == NULL && pxExp->next_item == NULL)

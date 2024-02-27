@@ -5,10 +5,19 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+static ExpList_Item_t ExpList = {
+    NULL,
+    NULL,
+};
+
+ExpList_Item_t *mt_GetExpList()
+{
+    return &ExpList;
+}
 
 BaseType_t mt_RegisterExp(mt_exp *exp)
 {
-    ExpList_Item_t *pxExpList = &ExpList;
+    static ExpList_Item_t *pxExpList = &ExpList;
     ExpList_Item_t *pxExpListItem;
     BaseType_t xReturn = pdFAIL;
 
@@ -19,26 +28,23 @@ BaseType_t mt_RegisterExp(mt_exp *exp)
     {
         taskENTER_CRITICAL();
         {
-            /* Reference the experiment being registered from the newly created
-            list item. */
-            pxExpListItem->item = (mt_exp *)pvPortMalloc(sizeof(mt_exp));
-            configASSERT(pxExpListItem->item);
-
-            memcpy(pxExpList->item, exp, sizeof(mt_exp));
-            /* The new list item will get added to the end of the list, so
-            pxNext has nowhere to point. */
-            pxExpList->next_item = NULL;
-
-            /* Add the newly created list item to the end of the already existing
-            list. */
-            if (pxExpList->item == NULL)
+            if (pxExpList->item != NULL)
             {
-                pxExpList->item = pxExpListItem->item;
-                pxExpList->next_item = NULL;
+                pxExpListItem->item = (mt_exp *)pvPortMalloc(sizeof(mt_exp));
+                configASSERT(pxExpListItem->item);
+                memcpy(pxExpListItem->item, exp, sizeof(mt_exp));
+
+                pxExpListItem->next_item = NULL;
+
+                pxExpList->next_item = pxExpListItem;
+
+                pxExpList = pxExpListItem;
             }
             else
             {
-                pxExpList->next_item = pxExpListItem;
+                pxExpList->item = (mt_exp *)pvPortMalloc(sizeof(mt_exp));
+                configASSERT(pxExpList->item);
+                memcpy(pxExpList->item, exp, sizeof(mt_exp));
             }
         }
         taskEXIT_CRITICAL();
@@ -47,5 +53,4 @@ BaseType_t mt_RegisterExp(mt_exp *exp)
     }
 
     return xReturn;
-
 }

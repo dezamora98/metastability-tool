@@ -38,10 +38,7 @@ typedef struct xExpList
     struct xExpList *next_item;
 } ExpList_Item_t;
 
-static ExpList_Item_t ExpList = {
-    NULL,
-    NULL,
-};
+ExpList_Item_t* mt_GetExpList();
 
 BaseType_t mt_RegisterExp(mt_exp *exp);
 

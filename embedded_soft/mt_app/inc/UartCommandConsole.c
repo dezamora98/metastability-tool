@@ -255,7 +255,11 @@ static void prvUARTCommandConsoleTask(void *pvParameters)
         }
         else
         {
-            if (cRxedChar == '\r')
+            if(cRxedChar >= 17  && cRxedChar <= 20)
+            {
+                //ignore
+            }
+            else if (cRxedChar == '\r')
             {
                 /* Just to space the output from the input. */
                 vSerialPutString(uCC_ptr, (char *)pcNewLine, strlen(pcNewLine));
