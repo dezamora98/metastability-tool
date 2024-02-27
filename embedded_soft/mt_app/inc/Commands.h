@@ -12,7 +12,6 @@
 #include <string.h>
 #include <stdint.h>
 
-
 /* Utils includes. */
 #include "FreeRTOS_CLI.h"
 
@@ -30,8 +29,8 @@ BaseType_t pubExperimentCommand(char *pcWriteBuffer, size_t xWriteBufferLen, con
 static const CLI_Command_Definition_t xExperimentCommand =
 	{
 		"experiment",
-		"\r\nexperiment:\r\n "
-		"\t experiment <name> <duration> <clk_frec> <sample_rate> \r\n"
+		"\r\ngenerate experiment:\r\n"
+		"\texperiment <name> <duration> <clk_frec> <sample_rate> \r\n"
 		"\r\n",
 		pubExperimentCommand,
 		4};
@@ -42,9 +41,20 @@ static const CLI_Command_Definition_t xlsCommand =
 	{
 		"ls",
 		"\r\nls:\r\n "
-		"\t list experiment. \r\n"
+		"\tlist experiment. \r\n"
 		"\r\n",
 		publsCommand,
 		0};
+
+BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);
+
+static const CLI_Command_Definition_t xStartCommand =
+	{
+		"start",
+		"\r\nstart:\r\n "
+		"\tstart <experiment_name> \r\n"
+		"\r\n",
+		publsCommand,
+		1};
 
 #endif /* INC_COMMANDS_H_ */

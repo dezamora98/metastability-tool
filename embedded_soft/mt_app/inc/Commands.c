@@ -101,3 +101,22 @@ BaseType_t publsCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
 
     return xReturn;
 }
+
+BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
+{
+    ExpList_Item_t* pxExpList_i = mt_GetExpList;
+    BaseType_t t_leng;
+    const char * name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
+
+    while (pxExpList_i != NULL)
+    {
+        if(strncmp(pxExpList_i->item->exp_name, name, t_leng))
+        {
+            mt_StartExperiment(pxExpList_i);
+            break;
+        }
+        pxExpList_i = pxExpList_i->next_item;
+    }
+    
+    
+}

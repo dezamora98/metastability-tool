@@ -42,4 +42,6 @@ ExpList_Item_t* mt_GetExpList();
 
 BaseType_t mt_RegisterExp(mt_exp *exp);
 
+BaseType_t mt_StartExperiment(ExpList_Item_t* ExpItem);
+
 #endif // !M_TOOL_H

@@ -54,3 +54,10 @@ BaseType_t mt_RegisterExp(mt_exp *exp)
 
     return xReturn;
 }
+
+BaseType_t mt_StartExperiment(ExpList_Item_t* ExpItem)
+{
+    BaseType_t xReturn = pdFAIL;
+    //->incluir código.
+    return xReturn;
+}
