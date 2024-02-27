@@ -1,29 +1,24 @@
-/*
- * main.c
- *
- *  Created on: Feb 24, 2024
- *      Author: 0K
+/**
+ * @file main.c
+ * @author Daniel Enquique Zamora Sifredo (dezamora98@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-02-26
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
-
-
-/*
- * main.c
- *
- *  Created on: Feb 23, 2024
- *      Author: 0K
- */
-
 #include <stdio.h>
 #include <stdbool.h>
-#include "FreeRTOS.h"
-#include "task.h"
 #include "xparameters.h"
 #include "xuartps.h"
+#include "xscugic.h"
+#include "xil_cache.h"
+#include "FreeRTOS.h"
+#include "task.h"
 #include "../inc/Commands.h"
 #include "../inc/UartCommandConsole.h"
 #include "../inc/FreeRTOS_CLI.h"
-#include "xscugic.h"
-#include "xil_cache.h"
 
 
 
@@ -38,6 +33,8 @@ int main(void)
 	XUartPs uart;
 
 	FreeRTOS_CLIRegisterCommand(&xClearCommand);
+	FreeRTOS_CLIRegisterCommand(&xExperimentCommand);
+	FreeRTOS_CLIRegisterCommand(&xlsCommand);
 
 	vUARTCommandConsoleStart(&uCC, &uart, XPAR_PS7_UART_1_DEVICE_ID);
 
@@ -45,9 +42,8 @@ int main(void)
 
 	vTaskStartScheduler();
 
-#ifndef DEBUG_OFF
-	printf("\t MAIN >> ERROR IN FREE_RTOS.\r\n");
-#endif
+	printf("\t (E) >> ERROR IN FREE_RTOS -> (MAIN)\r\n");
+
 
 	vUARTCommandConsoleStop(&uCC);
 	return XST_FAILURE;

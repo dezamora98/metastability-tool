@@ -160,7 +160,7 @@ void vUARTCommandConsoleStart(UartCommandConsole_t *uCC_ptr, void *uart, uint16_
     /* Create that task that handles the console itself. */
     xTaskCreate(prvUARTCommandConsoleTask,    /* The task that implements the command console. */
                 "CLI",                        /* Text name assigned to the task.  This is just to assist debugging.  The kernel does not use this name itself. */
-                512,                          /* The size of the stack allocated to the task. */
+                2048,                          /* The size of the stack allocated to the task. */
                 uCC_ptr,                      /* The parameter is not used, so NULL is passed. */
                 tskIDLE_PRIORITY + 1,         /* The priority allocated to the task. */
                 uCC_ptr->_consoleTaskHandle); /* A handle is not required, so just pass NULL. */
@@ -260,9 +260,9 @@ static void prvUARTCommandConsoleTask(void *pvParameters)
                 /* Just to space the output from the input. */
                 vSerialPutString(uCC_ptr, (char *)pcNewLine, strlen(pcNewLine));
             }
-            else if(cRxedChar == 12)
+            else if (cRxedChar == 12)
             {
-                vSerialPutString(uCC_ptr, "\033[2J\033[H\r\n>> ",sizeof("\033[2J\033[H\r\n>> "));
+                vSerialPutString(uCC_ptr, "\033[2J\033[H\r\n>> ", sizeof("\033[2J\033[H\r\n>> "));
             }
             else if ((cRxedChar == '\b') || (cRxedChar == cmdASCII_DEL))
             {
@@ -273,9 +273,9 @@ static void prvUARTCommandConsoleTask(void *pvParameters)
                     ucInputIndex--;
                     cInputString[ucInputIndex] = '\0';
                 }
-
-                vSerialPutString(uCC_ptr, (char*) new_text_b_or_d,strlen(new_text_b_or_d));
-                vSerialPutString(uCC_ptr, (char *) cInputString, strlen(cInputString));
+                vSerialPutString(uCC_ptr, "\r                                                ", 50);
+                vSerialPutString(uCC_ptr, (char *)new_text_b_or_d, strlen(new_text_b_or_d));
+                vSerialPutString(uCC_ptr, (char *)cInputString, strlen(cInputString));
             }
             else
             {
