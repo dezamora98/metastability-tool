@@ -174,7 +174,6 @@ static void vSerialPutString(void *uCC_ptr, char *str, uint32_t size)
     uint32_t t_offset = 0;
     do
     {
-        vTaskDelay(pdMS_TO_TICKS(0.1));
         t_offset += XUartPs_Send(((XUartPs *)uCC_p->_interface), (uint8_t *)&str[t_offset], size - t_offset);
     } while (size != t_offset);
 }
@@ -182,7 +181,7 @@ static void vSerialPutString(void *uCC_ptr, char *str, uint32_t size)
 static inline void vSerialGetchar(UartCommandConsole_t *uCC_ptr, char *cRxedChar)
 {
     while (XUartPs_IsReceiveData(((XUartPs *)uCC_ptr->_interface)->Config.BaseAddress))
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(10));
 
     *cRxedChar = XUartPs_RecvByte(((XUartPs *)uCC_ptr->_interface)->Config.BaseAddress);
 }
@@ -277,7 +276,7 @@ static void prvUARTCommandConsoleTask(void *pvParameters)
                     ucInputIndex--;
                     cInputString[ucInputIndex] = '\0';
                 }
-                vSerialPutString(uCC_ptr, "\r                                                ", 50);
+                vSerialPutString(uCC_ptr, "\r\21", 1);
                 vSerialPutString(uCC_ptr, (char *)new_text_b_or_d, strlen(new_text_b_or_d));
                 vSerialPutString(uCC_ptr, (char *)cInputString, strlen(cInputString));
             }

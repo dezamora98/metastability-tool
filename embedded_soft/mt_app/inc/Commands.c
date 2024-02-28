@@ -231,3 +231,9 @@ BaseType_t pubRmCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
     sprintf(pcWriteBuffer, " (%s) -> does not exist\r\n", name);
     return pdFALSE;
 }
+
+BaseType_t pubVersionCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
+{
+    sprintf(pcWriteBuffer,"  MT-TOOL 0.0.1 (ZYNQ-VERSION)\r\n");
+    return pdFALSE;
+}

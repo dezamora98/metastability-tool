@@ -146,7 +146,7 @@ void ADCTask(void *vp)
         XSysMon_GetStatus(&sysmon->sysmon); /* Clear the old status */
         while ((XSysMon_GetStatus(&sysmon->sysmon) & XSM_SR_EOS_MASK) != XSM_SR_EOS_MASK)
         {
-            vTaskDelay(10);
+            vTaskDelay(100);
         }
 
         sysmon->temp = XSysMon_RawToTemperature(XSysMon_GetAdcData(&sysmon->sysmon, XSM_CH_TEMP));
@@ -154,6 +154,6 @@ void ADCTask(void *vp)
 
         printf("\t(I) Temperatura = %f\r\n \t(I) VCC = %f\r\n", sysmon->temp, sysmon->vint);
 
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(250));
     }
 }

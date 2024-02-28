@@ -20,7 +20,7 @@ BaseType_t prvClearCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const ch
 static const CLI_Command_Definition_t xClearCommand =
 	{
 		"clear",
-		"\r\nclear or Ctrl+L:\r\n" 
+		"\r\nclear or Ctrl+L:\r\n"
 		" Clear terminal.\r\n",
 		prvClearCommand,
 		0};
@@ -79,5 +79,16 @@ static const CLI_Command_Definition_t xRmCommand =
 		"\r\n",
 		pubRmCommand,
 		1};
+
+BaseType_t pubVersionCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);
+
+static const CLI_Command_Definition_t xVersionCommand =
+	{
+		"version",
+		"\r\nversion:\r\n "
+		" return software version.\r\n"
+		"\r\n",
+		pubVersionCommand,
+		0};
 
 #endif /* INC_COMMANDS_H_ */
