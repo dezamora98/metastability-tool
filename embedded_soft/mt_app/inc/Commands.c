@@ -214,12 +214,15 @@ BaseType_t pubRmCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
             if (pxLast != NULL)
             {
                 pxLast->next_item = pxExpList_i->next_item;
-                free(pxExpList_i);
+                vPortFree(pxExpList_i->item);
+                vPortFree(pxExpList_i);
                 sprintf(pcWriteBuffer, " ~%s\r\n", name);
                 return pdFALSE;
             }
-            pxExpList_i->item=NULL;
-            
+            vPortFree(pxExpList_i->item);
+            pxExpList_i->item = NULL;
+            sprintf(pcWriteBuffer, " ~%s\r\n", name);
+            return pdFALSE;
         }
         pxLast = pxExpList_i;
         pxExpList_i = pxExpList_i->next_item;
