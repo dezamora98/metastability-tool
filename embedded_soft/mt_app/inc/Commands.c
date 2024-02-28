@@ -110,7 +110,7 @@ BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const ch
     BaseType_t t_leng;
     const char *name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
 
-    memset(pcWriteBuffer,0,xWriteBufferLen);
+    memset(pcWriteBuffer, 0, xWriteBufferLen);
 
     if (state == pdFAIL)
     {
@@ -194,5 +194,37 @@ BaseType_t pubCatCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char
 
     sprintf(pcWriteBuffer, "\texperiment <%s> does not exist\r\n", name);
 
+    return pdFALSE;
+}
+
+BaseType_t pubRmCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
+{
+    ExpList_Item_t *pxExpList_i = mt_GetExpList();
+    ExpList_Item_t *pxLast = NULL;
+    BaseType_t t_leng;
+    const char *name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
+
+    memset(pcWriteBuffer, 0, xWriteBufferLen);
+
+    while (pxExpList_i != NULL)
+    {
+
+        if (strncmp(pxExpList_i->item->exp_name, name, t_leng) == 0)
+        {
+            if (pxLast != NULL)
+            {
+                pxLast->next_item = pxExpList_i->next_item;
+                free(pxExpList_i);
+                sprintf(pcWriteBuffer, " ~%s\r\n", name);
+                return pdFALSE;
+            }
+            pxExpList_i->item=NULL;
+            
+        }
+        pxLast = pxExpList_i;
+        pxExpList_i = pxExpList_i->next_item;
+    }
+
+    sprintf(pcWriteBuffer, " (%s) -> does not exist\r\n", name);
     return pdFALSE;
 }

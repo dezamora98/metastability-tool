@@ -38,6 +38,7 @@ int main(void)
 	FreeRTOS_CLIRegisterCommand(&xlsCommand);
 	FreeRTOS_CLIRegisterCommand(&xCatCommand);
 	FreeRTOS_CLIRegisterCommand(&xStartCommand);
+	FreeRTOS_CLIRegisterCommand(&xRmCommand);
 
 	vUARTCommandConsoleStart(&uCC, &uart, XPAR_PS7_UART_1_DEVICE_ID);
 	monitor_init();

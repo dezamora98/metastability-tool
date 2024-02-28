@@ -20,7 +20,8 @@ BaseType_t prvClearCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const ch
 static const CLI_Command_Definition_t xClearCommand =
 	{
 		"clear",
-		"\r\nclear or Ctrl+L:\r\n  Clear terminal.\r\n",
+		"\r\nclear or Ctrl+L:\r\n" 
+		" Clear terminal.\r\n",
 		prvClearCommand,
 		0};
 
@@ -30,7 +31,7 @@ static const CLI_Command_Definition_t xExperimentCommand =
 	{
 		"experiment",
 		"\r\ngenerate experiment:\r\n"
-		"\texperiment <name> <duration> <clk_frec> <sample_rate> \r\n"
+		" experiment <name> <duration> <clk_frec> <sample_rate> \r\n"
 		"\r\n",
 		pubExperimentCommand,
 		4};
@@ -41,7 +42,7 @@ static const CLI_Command_Definition_t xlsCommand =
 	{
 		"ls",
 		"\r\nls:\r\n "
-		"\tlist experiment. \r\n"
+		" list experiment. \r\n"
 		"\r\n",
 		publsCommand,
 		0};
@@ -52,7 +53,7 @@ static const CLI_Command_Definition_t xStartCommand =
 	{
 		"start",
 		"\r\nstart:\r\n "
-		"\tstart <experiment_name> \r\n"
+		" start <experiment_name> \r\n"
 		"\r\n",
 		pubStartCommand,
 		1};
@@ -63,9 +64,20 @@ static const CLI_Command_Definition_t xCatCommand =
 	{
 		"cat",
 		"\r\ncat:\r\n "
-		"\tcat <experiment_name> \r\n"
+		" cat <experiment_name> \r\n"
 		"\r\n",
 		pubCatCommand,
+		1};
+
+BaseType_t pubRmCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);
+
+static const CLI_Command_Definition_t xRmCommand =
+	{
+		"rm",
+		"\r\nrm:\r\n "
+		" rm <experiment_name> \r\n"
+		"\r\n",
+		pubRmCommand,
 		1};
 
 #endif /* INC_COMMANDS_H_ */
