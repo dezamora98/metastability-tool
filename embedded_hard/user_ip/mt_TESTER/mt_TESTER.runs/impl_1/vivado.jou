@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Feb 27 20:49:11 2024
+# Process ID: 51104
+# Current directory: D:/mt_TESTER/mt_TESTER.runs/impl_1
+# Command line: vivado.exe -log Circuito_para_pruebas_v1_0.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source Circuito_para_pruebas_v1_0.tcl -notrace
+# Log file: D:/mt_TESTER/mt_TESTER.runs/impl_1/Circuito_para_pruebas_v1_0.vdi
+# Journal file: D:/mt_TESTER/mt_TESTER.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source Circuito_para_pruebas_v1_0.tcl -notrace

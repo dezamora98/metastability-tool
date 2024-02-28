@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Feb 27 22:08:25 2024
+# Process ID: 54840
+# Current directory: D:/mt_hard/mt_hard.runs/mt_hard_bd_xbar_0_synth_1
+# Command line: vivado.exe -log mt_hard_bd_xbar_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mt_hard_bd_xbar_0.tcl
+# Log file: D:/mt_hard/mt_hard.runs/mt_hard_bd_xbar_0_synth_1/mt_hard_bd_xbar_0.vds
+# Journal file: D:/mt_hard/mt_hard.runs/mt_hard_bd_xbar_0_synth_1\vivado.jou
+#-----------------------------------------------------------
+source mt_hard_bd_xbar_0.tcl -notrace

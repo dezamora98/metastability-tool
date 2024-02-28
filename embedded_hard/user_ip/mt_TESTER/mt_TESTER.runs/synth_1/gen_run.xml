@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1709084892">
+  <File Type="RDS-PROPCONSTRS" Name="Circuito_para_pruebas_v1_0_drc_synth.rpt"/>
+  <File Type="PA-TCL" Name="Circuito_para_pruebas_v1_0.tcl"/>
+  <File Type="RDS-RDS" Name="Circuito_para_pruebas_v1_0.vds"/>
+  <File Type="RDS-UTIL" Name="Circuito_para_pruebas_v1_0_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="Circuito_para_pruebas_v1_0_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="Circuito_para_pruebas_v1_0.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="Circuito_para_pruebas_v1_0_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="Circuito_para_pruebas_v1_0_timing_summary_synth.pb"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Contador_NBits.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Contador_NBits.vhd"/>
+        <Attr Name="ImportTime" Val="1708229530"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_test.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_test.vhd"/>
+        <Attr Name="ImportTime" Val="1708229530"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Contador_32bits.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Contador_32bits.vhd"/>
+        <Attr Name="ImportTime" Val="1708229530"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/DFP.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/DFP.vhd"/>
+        <Attr Name="ImportTime" Val="1708229530"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Sincronizador.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Sincronizador.vhd"/>
+        <Attr Name="ImportTime" Val="1708229532"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Sincroniza_RST.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Sincroniza_RST.vhd"/>
+        <Attr Name="ImportTime" Val="1708229532"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas.vhd"/>
+        <Attr Name="ImportTime" Val="1708910045"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas_v1_0_S00_AXI.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas_v1_0_S00_AXI.vhd"/>
+        <Attr Name="ImportTime" Val="1708229530"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas_v1_0.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas_v1_0.vhd"/>
+        <Attr Name="ImportTime" Val="1708909846"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/ip_repo/component.xml">
+      <FileInfo SFType="IPXACT">
+        <Attr Name="ImportPath" Val="$PPRDIR/../Proyecto_TADSE_IP_Custom/ip_repo/component.xml"/>
+        <Attr Name="ImportTime" Val="1709084451"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="Circuito_para_pruebas_v1_0"/>
+      <Option Name="TopRTLFile" Val="$PSRCDIR/sources_1/imports/ip_repo/Circuito_para_pruebas_1.0/hdl/Circuito_para_pruebas_v1_0.vhd"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2016">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
+    <Step Id="synth_design"/>
+  </Strategy>
+</GenRun>

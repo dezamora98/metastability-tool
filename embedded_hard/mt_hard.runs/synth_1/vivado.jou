@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Feb 27 22:10:39 2024
+# Process ID: 53852
+# Current directory: D:/mt_hard/mt_hard.runs/synth_1
+# Command line: vivado.exe -log mt_hard_bd_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mt_hard_bd_wrapper.tcl
+# Log file: D:/mt_hard/mt_hard.runs/synth_1/mt_hard_bd_wrapper.vds
+# Journal file: D:/mt_hard/mt_hard.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source mt_hard_bd_wrapper.tcl -notrace

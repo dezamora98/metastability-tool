@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="mt_hard_bd_xadc_wiz_0_0_synth_1" LaunchDir="D:/mt_hard/mt_hard.runs/mt_hard_bd_xadc_wiz_0_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="mt_hard_bd_xbar_0_synth_1" LaunchDir="D:/mt_hard/mt_hard.runs/mt_hard_bd_xbar_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="mt_hard_bd_auto_pc_0_synth_1" LaunchDir="D:/mt_hard/mt_hard.runs/mt_hard_bd_auto_pc_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="synth_1" LaunchDir="D:/mt_hard/mt_hard.runs/synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado">
+		<Parent Id="mt_hard_bd_xadc_wiz_0_0_synth_1"/>
+		<Parent Id="mt_hard_bd_xbar_0_synth_1"/>
+		<Parent Id="mt_hard_bd_auto_pc_0_synth_1"/>
+	</Run>
+</Runs>
+
