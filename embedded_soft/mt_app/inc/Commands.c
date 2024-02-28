@@ -144,6 +144,7 @@ BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const ch
                 sprintf(pcWriteBuffer, "\r wait.  ");
                 break;
             }
+            vTaskDelay(pdMS_TO_TICKS(100));
             return pdTRUE;
         }
     }

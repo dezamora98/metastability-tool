@@ -182,7 +182,7 @@ static void vSerialPutString(void *uCC_ptr, char *str, uint32_t size)
 static inline void vSerialGetchar(UartCommandConsole_t *uCC_ptr, char *cRxedChar)
 {
     while (XUartPs_IsReceiveData(((XUartPs *)uCC_ptr->_interface)->Config.BaseAddress))
-        vTaskDelay(pdMS_TO_TICKS(5));
+        vTaskDelay(pdMS_TO_TICKS(20));
 
     *cRxedChar = XUartPs_RecvByte(((XUartPs *)uCC_ptr->_interface)->Config.BaseAddress);
 }
