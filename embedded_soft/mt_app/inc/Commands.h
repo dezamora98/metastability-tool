@@ -54,7 +54,7 @@ static const CLI_Command_Definition_t xStartCommand =
 		"\r\nstart:\r\n "
 		"\tstart <experiment_name> \r\n"
 		"\r\n",
-		publsCommand,
+		pubStartCommand,
 		1};
 
 BaseType_t pubCatCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString);

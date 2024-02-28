@@ -40,8 +40,19 @@ typedef struct xExpList
 
 ExpList_Item_t* mt_GetExpList();
 
+void mt_setExperiment(mt_exp* exp);
+
+BaseType_t mt_ConfigTester(mt_exp* esp);
+
+BaseType_t mt_InitTester(mt_exp* esp);
+
+BaseType_t mt_ExpIsCompleted(mt_exp* exp);
+
+
 BaseType_t mt_RegisterExp(mt_exp *exp);
 
-BaseType_t mt_StartExperiment(ExpList_Item_t* ExpItem);
+BaseType_t mt_StartExperiment(mt_exp* exp);
+
+
 
 #endif // !M_TOOL_H

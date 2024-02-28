@@ -104,19 +104,52 @@ BaseType_t publsCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char 
 
 BaseType_t pubStartCommand(char *pcWriteBuffer, size_t xWriteBufferLen, const char *pcCommandString)
 {
-    ExpList_Item_t *pxExpList_i = mt_GetExpList();
+    static BaseType_t state = pdFAIL;
+    static ExpList_Item_t *pxExpList_i = NULL;
+    static uint8_t count = 0;
     BaseType_t t_leng;
     const char *name = FreeRTOS_CLIGetParameter(pcCommandString, 1, &t_leng);
 
-    while (pxExpList_i != NULL)
+    memset(pcWriteBuffer,0,xWriteBufferLen);
+
+    if (state == pdFAIL)
     {
-        if (strncmp(pxExpList_i->item->exp_name, name, t_leng))
+        pxExpList_i = mt_GetExpList();
+    }
+
+    while (pxExpList_i != NULL && state == pdFAIL)
+    {
+        if (strncmp(pxExpList_i->item->exp_name, name, t_leng) == 0)
         {
-            mt_StartExperiment(pxExpList_i);
+            mt_StartExperiment(pxExpList_i->item);
+            state = pdPASS;
             return pdTRUE;
         }
         pxExpList_i = pxExpList_i->next_item;
     }
+
+    if (pxExpList_i != NULL)
+    {
+        if (mt_ExpIsCompleted(pxExpList_i->item) == pdFALSE)
+        {
+            switch (count)
+            {
+            case 0:
+                sprintf(pcWriteBuffer, "\r wait...");
+                break;
+            case 1:
+                sprintf(pcWriteBuffer, "\r wait.. ");
+                break;
+            default:
+                sprintf(pcWriteBuffer, "\r wait.  ");
+                break;
+            }
+            return pdTRUE;
+        }
+    }
+
+    state = pdFAIL;
+    count = 0;
     return pdFALSE;
 }
 

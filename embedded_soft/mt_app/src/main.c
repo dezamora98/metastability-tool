@@ -19,6 +19,7 @@
 #include "../inc/Commands.h"
 #include "../inc/UartCommandConsole.h"
 #include "../inc/FreeRTOS_CLI.h"
+#include "../inc/monitor.h"
 
 
 
@@ -36,9 +37,10 @@ int main(void)
 	FreeRTOS_CLIRegisterCommand(&xExperimentCommand);
 	FreeRTOS_CLIRegisterCommand(&xlsCommand);
 	FreeRTOS_CLIRegisterCommand(&xCatCommand);
+	FreeRTOS_CLIRegisterCommand(&xStartCommand);
 
 	vUARTCommandConsoleStart(&uCC, &uart, XPAR_PS7_UART_1_DEVICE_ID);
-
+	monitor_init();
 	//->¡config interrupt!
 
 	vTaskStartScheduler();
