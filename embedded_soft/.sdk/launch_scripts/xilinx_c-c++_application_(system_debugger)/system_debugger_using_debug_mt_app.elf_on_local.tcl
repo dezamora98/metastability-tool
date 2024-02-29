@@ -10,4 +10,5 @@ targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Z
 rst -processor
 targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo Z7 210351B400B2A"} -index 0
 dow D:/metastability-tool/embedded_soft/mt_app/Debug/mt_app.elf
-bpadd -addr &main
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo Z7 210351B400B2A"} -index 0
+con
