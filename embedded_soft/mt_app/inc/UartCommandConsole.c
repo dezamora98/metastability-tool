@@ -276,7 +276,7 @@ static void prvUARTCommandConsoleTask(void *pvParameters)
                     ucInputIndex--;
                     cInputString[ucInputIndex] = '\0';
                 }
-                vSerialPutString(uCC_ptr, "\r\21", 1);
+                vSerialPutString(uCC_ptr, "\r                                                ", 50);
                 vSerialPutString(uCC_ptr, (char *)new_text_b_or_d, strlen(new_text_b_or_d));
                 vSerialPutString(uCC_ptr, (char *)cInputString, strlen(cInputString));
             }
